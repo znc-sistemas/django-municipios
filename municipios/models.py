@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
-from django.contrib.gis.db import models
 
 from django.conf import settings
-
 GEO_MUNICIPIOS = getattr(settings,'GEO_MUNICIPIOS', False)
+
+if GEO_MUNICIPIOS:
+    from django.contrib.gis.db import models
+else:
+    from django.db import models
+
 if GEO_MUNICIPIOS:
     SRID = getattr(settings,'SRID', '929102')
     
@@ -15,6 +19,7 @@ class UF(models.Model):
     if GEO_MUNICIPIOS : the_geom = models.MultiPolygonField(srid=SRID)
     class Meta:
         db_table = u'uf'   
+
          
 class Municipio(models.Model):
     id = models.IntegerField(primary_key=True)
