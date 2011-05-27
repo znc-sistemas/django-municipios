@@ -25,7 +25,7 @@ class Municipio(models.Model):
     id = models.IntegerField(primary_key=True)
     codigo_ibge = models.CharField(unique=True, max_length=16)
     nome = models.CharField(max_length=150)
-    nome_abreviado = models.CharField(max_length=15)
+    nome_abreviado = models.CharField(max_length=15, blank=True, null=True)
     
     uf = models.ForeignKey(UF)
     uf_sigla = models.CharField(max_length=2)
