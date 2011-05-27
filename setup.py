@@ -12,6 +12,7 @@ setup(
     maintainer_email='contato@znc.com.br',
     url='https://github.com/znc-sistemas/django-municipios',
     packages=find_packages(),
+    include_package_data=True,
     zip_safe=False,
     classifiers=[
         'Framework :: Django',
