@@ -27,18 +27,18 @@ Usando o django-municipios
 ==========================
 
 no "forms.py"
-$ from django import forms
-$ from municipios.widgets import SelectMunicipioWidget
+ $ from django import forms
+ $ from municipios.widgets import SelectMunicipioWidget
 
-$ class FormEndereco(forms.Form):
-$     municipio = forms.IntegerField(label=u"UF - Municipio", widget=SelectMunicipioWidget, required=False)
+ $ class FormEndereco(forms.Form):
+ $     municipio = forms.IntegerField(label=u"UF - Municipio", widget=SelectMunicipioWidget, required=False)
 
 View
-$ def teste(request):
-$     form = FormEndereco()
-$     return render_to_response('endereco/teste.html',
-$                               {'form':form,},
-$                                context_instance=RequestContext(request),)
+ $ def teste(request):
+ $     form = FormEndereco()
+ $     return render_to_response('endereco/teste.html',
+ $                               {'form':form,},
+ $                                context_instance=RequestContext(request),)
 
 Template  
 1 -  jquery no seu template.
@@ -50,11 +50,11 @@ Template
 URLs
 1 - Adiciona o staticfiles.urls . O WIDGET depende de um arquivo javascript incluso no widget
 2 - url "municipios_app" - por enquanto é ncessário a utilização desta url para inclusão correta do template "municipio_options.html". 
-$ ...
-$       url(r'^municipios_app/', include('municipios.urls')),
-$       url(r'^teste/', 'endereco.views.teste', name='teste'),
-$ ...
-$ )
-$ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-$ urlpatterns += staticfiles_urlpatterns()
+ $ ...
+ $       url(r'^municipios_app/', include('municipios.urls')),
+ $       url(r'^teste/', 'endereco.views.teste', name='teste'),
+ $ ...
+ $ )
+ $ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+ $ urlpatterns += staticfiles_urlpatterns()
 
