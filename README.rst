@@ -40,6 +40,7 @@ Se for utilizar GIS adicione a variável GEO_MUNICIPIOS::
 
     
 no "forms.py"
+~~~~~~~~~~~~~ 
     from django import forms
     from municipios.widgets import SelectMunicipioWidget
 
