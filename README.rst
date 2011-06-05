@@ -41,7 +41,10 @@ Se for utilizar GIS adicione a variável GEO_MUNICIPIOS::
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     GEO_MUNICIPIOS = True 
-
+    
+    antes de rodar o syncdb execute o script SQL "insert_spatial_ref_sys.sql" que se encontra do diretório "sql".
+    
+    
 no "forms.py"
 ~~~~~~~~~~~~~ 
     from django import forms
