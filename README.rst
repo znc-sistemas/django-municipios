@@ -17,7 +17,7 @@ ou a baixar o código fonte do  github and run "setup.py::
      $ cd django-municipios
      $ python setup.py install
 
-DEPENDENDICAS
+DEPENDENCIAS
 =============
 
  * jQUery  
