@@ -9,18 +9,19 @@ Instalando o django-municipios
 ==============================
 
     pip install django-muinicipios
+    
     easy_install django-municipios
 
-ou a baixar o código fonte do  github and run "setup.py::
+ou baixar o código fonte do github e rodar "setup.py":
 
      $ git clone git://github.com/znc-sistemas/django-municipios.git
      $ cd django-municipios
      $ python setup.py install
 
-DEPENDENCIAS
+DEPENDÊNCIAS
 =============
 
- * jQUery  
+ * jQuery  
 
 Usando o django-municipios
 ==========================
@@ -37,8 +38,8 @@ adicione a aplicação no INSTALLED_APP no seu settings.py
 
     )  
     
-Se for utilizar GIS adicione a variável GEO_MUNICIPIOS::
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Se for utilizar GIS adicione a variável GEO_MUNICIPIOS:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     GEO_MUNICIPIOS = True 
     
