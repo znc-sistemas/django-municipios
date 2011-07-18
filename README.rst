@@ -32,7 +32,8 @@ SETTINGS
 ~~~~~~~~
 adicione a aplicação no INSTALLED_APP no seu settings.py
 
-{{{
+::
+
     INSTALLED_APPS = (
         ...
 
@@ -41,7 +42,7 @@ adicione a aplicação no INSTALLED_APP no seu settings.py
         ...
 
     )
-}}}  
+  
     
 Se for utilizar GIS adicione a variável MUNICIPIOS_GEO:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
