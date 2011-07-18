@@ -47,17 +47,20 @@ adicione a aplicação no INSTALLED_APP no seu settings.py
 Se for utilizar GIS adicione a variável MUNICIPIOS_GEO:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-{{{    
+:: 
+  
     MUNICIPIOS_GEO = True 
-}}}
+
    
-    No settings.py, antes de rodar o `syncdb`.
-    Este parâmetro habilita os campos que armazenam dados Geográficos (GeoDjango) 
+No settings.py, antes de rodar o `syncdb`.
+Este parâmetro habilita os campos que armazenam dados Geográficos (GeoDjango) 
     
     
 Utilizando o widget de Seleção de Municípios
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-{{{
+
+::
+
     from django import forms
     from municipios.widgets import SelectMunicipioWidget
 
@@ -67,6 +70,8 @@ Utilizando o widget de Seleção de Municípios
 
 View
 ~~~~
+
+::
 
      def teste(request):
          form = FormEndereco()
@@ -79,20 +84,22 @@ Template
 1. Inclua o jquery no seu template.
 2. form.media - o widget depende de codigo js para funcionar o ajax
 
-{{{
+::
+
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.5.2.min.js"></script>
 
     {{form.media}}
 
     {{form}}
-}}} 
+
 
 URLs
 ~~~~
 1. Adiciona o staticfiles.urls . O Widget depende de um arquivo javascript incluso no widget
 2. url "municipios_app" - por enquanto é ncessário a utilização desta url para inclusão correta do template 
 
-{{{
+::
+
     (
 
     ...
@@ -108,4 +115,3 @@ URLs
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
     urlpatterns += staticfiles_urlpatterns()
-}}}
