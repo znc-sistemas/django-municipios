@@ -8,9 +8,11 @@ Aplicação plugável Django com modelos e widgets para os Municípios Brasileir
 Instalando o django-municipios
 ==============================
 
-    pip install django-muinicipios
+    $ pip install django-municipios
     
-    easy_install django-municipios
+ou
+    
+    $ easy_install django-municipios
 
 ou baixar o código fonte do github e rodar "setup.py":
 
@@ -21,7 +23,7 @@ ou baixar o código fonte do github e rodar "setup.py":
 DEPENDÊNCIAS
 =============
 
- * jQuery  
+ * jQuery (somente para utilizar widget de seleção de Municípios)  
 
 Usando o django-municipios
 ==========================
@@ -29,6 +31,8 @@ Usando o django-municipios
 SETTINGS
 ~~~~~~~~
 adicione a aplicação no INSTALLED_APP no seu settings.py
+
+{{{
     INSTALLED_APPS = (
         ...
 
@@ -36,23 +40,28 @@ adicione a aplicação no INSTALLED_APP no seu settings.py
 
         ...
 
-    )  
+    )
+}}}  
     
-Se for utilizar GIS adicione a variável GEO_MUNICIPIOS:
+Se for utilizar GIS adicione a variável MUNICIPIOS_GEO:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+{{{    
+    MUNICIPIOS_GEO = True 
+}}}
+   
+    No settings.py, antes de rodar o `syncdb`.
+    Este parâmetro habilita os campos que armazenam dados Geográficos (GeoDjango) 
     
-    GEO_MUNICIPIOS = True 
     
-    antes de rodar o syncdb execute o script SQL "insert_spatial_ref_sys.sql" que se encontra do diretório "sql".
-    
-    
-no "forms.py"
-~~~~~~~~~~~~~ 
+Utilizando o widget de Seleção de Municípios
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+{{{
     from django import forms
     from municipios.widgets import SelectMunicipioWidget
 
     class FormEndereco(forms.Form):
-        municipio = forms.IntegerField(label=u"UF - Municipio", widget=SelectMunicipioWidget, required=False)
+        municipio = forms.IntegerField(label=u"UF - Município", widget=SelectMunicipioWidget)
 
 
 View
@@ -66,20 +75,23 @@ View
 
 Template
 ~~~~~~~~  
-1. inclua o jquery no seu template.
+1. Inclua o jquery no seu template.
 2. form.media - o widget depende de codigo js para funcionar o ajax
 
+{{{
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.5.2.min.js"></script>
 
     {{form.media}}
 
     {{form}}
+}}} 
 
 URLs
 ~~~~
-1. Adiciona o staticfiles.urls . O WIDGET depende de um arquivo javascript incluso no widget
+1. Adiciona o staticfiles.urls . O Widget depende de um arquivo javascript incluso no widget
 2. url "municipios_app" - por enquanto é ncessário a utilização desta url para inclusão correta do template 
 
+{{{
     (
 
     ...
@@ -95,3 +107,4 @@ URLs
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
     urlpatterns += staticfiles_urlpatterns()
+}}}
