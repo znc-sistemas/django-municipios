@@ -29,7 +29,7 @@ class SelectMunicipioWidget(Widget):
             try:
                 municipio = Municipio.objects.get(pk=value)
                 uf_val = municipio.uf
-                mun_choices = [(m.id, m.nome)for m in Municipio.objects.filter(uf=uf_val).order_by('nome')]
+                mun_choices = [(m.pk, m.nome) for m in Municipio.objects.filter(uf=uf_val).order_by('nome')]
                 municipio_select = Select(choices=[('','- Selecione -')]+mun_choices)
             except Municipio.DoesNotExist:
                 pass
@@ -48,5 +48,5 @@ class SelectMunicipioWidget(Widget):
         return mark_safe(u'\n'.join(output))
     
     class Media:
-        js = ( 'js/municipio.js',)
+        js = ( 'municipios/js/municipio.js',)
 
