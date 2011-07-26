@@ -1,5 +1,6 @@
 include README.rst
 recursive-include municipios/static *
 recursive-include municipios/templates *
-recursive-include municipios/fixture *
+recursive-include municipios/fixtures *
+recursive-include municipios/sql *
 

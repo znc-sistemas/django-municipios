@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
  
 setup(
     name='django-municipios',
-    version='0.5',
+    version='0.7',
     description='Aplicação plugável Django com modelos e widgets para os Municípios Brasileiros',
     long_description=open('README.rst').read(),
     author='ZNC Sistemas',
