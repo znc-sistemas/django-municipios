@@ -24,6 +24,7 @@ class UF(models.Model):
     regiao = models.CharField(max_length=20)
     if MUNICIPIOS_GEO:
         geom = models.MultiPolygonField(srid=SRID, null=True, blank=True)
+        objects = models.GeoManager()
 
     def __unicode__(self):
         return self.nome
@@ -41,6 +42,7 @@ class Municipio(models.Model):
     if MUNICIPIOS_GEO: 
         sede = models.PointField(srid=SRID, null=True, blank=True)
         geom = models.MultiPolygonField(srid=SRID, null=True, blank=True)
+        objects = models.GeoManager()
             
     def __unicode__(self):
         return u'%s - %s' % (self.nome, self.uf_sigla)
