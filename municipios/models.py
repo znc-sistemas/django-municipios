@@ -10,7 +10,7 @@ else:
 
 SRID = None
 if MUNICIPIOS_GEO:
-    SRID = getattr(settings,'MUNICIPIOS_SRID', '900913')
+    SRID = getattr(settings,'MUNICIPIOS_SRID', 900913)
     
     
     
