@@ -28,7 +28,7 @@ class SelectMunicipioWidget(Widget):
         if value:
             try:
                 municipio = Municipio.objects.get(pk=value)
-                uf_val = municipio.uf
+                uf_val = municipio.uf.pk
                 mun_choices = [(m.pk, m.nome) for m in Municipio.objects.filter(uf=uf_val).order_by('nome')]
                 municipio_select = Select(choices=[('','- Selecione -')]+mun_choices)
             except Municipio.DoesNotExist:
