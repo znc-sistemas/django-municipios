@@ -17,11 +17,14 @@ ou
 ou baixar o código fonte do github e rodar "setup.py":
 
      $ git clone git://github.com/znc-sistemas/django-municipios.git
+
      $ cd django-municipios
+
      $ python setup.py install
 
-DEPENDÊNCIAS
-=============
+
+Dependências
+============
 
  * jQuery (somente para utilizar widget de seleção de Municípios)  
 
@@ -43,9 +46,12 @@ adicione a aplicação no INSTALLED_APP no seu settings.py
 
     )
   
+
+Utilizando dados geográficos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
-Se for utilizar GIS adicione a variável MUNICIPIOS_GEO:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Se for utilizar GIS adicione a variável ``MUNICIPIOS_GEO``:
+
 
 :: 
   
@@ -53,7 +59,16 @@ Se for utilizar GIS adicione a variável MUNICIPIOS_GEO:
 
    
 No settings.py, antes de rodar o `syncdb`.
-Este parâmetro habilita os campos que armazenam dados Geográficos (GeoDjango) 
+Este parâmetro habilita os campos que armazenam dados Geográficos (GeoDjango).
+
+Para carregar dados geográficos de todos os Municípios e UFs baixe o arquivo de fixture 
+municipios_geo_900913.json.bz2_ (27.5 MB), e carregue a fixture com 
+
+::
+    
+    python manage.py loaddata municipios_geo_900913.json.bz2
+
+.. _municipios_geo_900913.json.bz2: https://github.com/downloads/znc-sistemas/django-municipios/municipios_geo_900913.json.bz2
     
     
 Utilizando o widget de Seleção de Municípios
@@ -81,22 +96,26 @@ View
 
 Template
 ~~~~~~~~  
-1. Inclua o jquery no seu template.
+1. Inclua o jquery no seu template, ou adicione ao media do seu Form.
 2. form.media - o widget depende de codigo js para funcionar o ajax
 
 ::
 
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.5.2.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
 
-    {{form.media}}
+    {{ form.media }}
 
-    {{form}}
+    {{ form }}
 
 
 URLs
 ~~~~
-1. Adiciona o staticfiles.urls . O Widget depende de um arquivo javascript incluso no widget
-2. url "municipios_app" - por enquanto é ncessário a utilização desta url para inclusão correta do template 
+Adicionar as urls da aplicação no arquivo definido pelo ``ROOT_URLCONF`` do setings.py.
+
+.. admonition:: Nota
+
+   A partir da versão 1.4 do Django o prefixo da url pode ser qualquer um, nas versões 
+   anteriores é necessário utilizar o prefixo "muncipios_app".
 
 ::
 
@@ -106,12 +125,14 @@ URLs
 
     url(r'^municipios_app/', include('municipios.urls')),
 
-    url(r'^teste/', 'endereco.views.teste', name='teste'),
-
     ...
 
     )
 
-    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+Arquivos Estáticos
+~~~~~~~~~~~~~~~~~~
 
-    urlpatterns += staticfiles_urlpatterns()
+Para o funcionamento do widget de seleção de municípios em ambiente de produção é necessário utilizar o comando collectstatic_ do ``Static Files``.
+
+
+.. _collectstatic: https://docs.djangoproject.com/en/1.4/ref/contrib/staticfiles/#collectstatic
