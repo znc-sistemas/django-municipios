@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.forms.widgets import Widget, TextInput, Select, MultiWidget, HiddenInput, Input
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
+
+try:
+    from django.core.urlresolvers import reverse_lazy
+    HAS_REVERSE_LAZY = True
+except ImportError:
+    HAS_REVERSE_LAZY = False
 
 from municipios.models import Municipio, UF
 
@@ -48,5 +53,9 @@ class SelectMunicipioWidget(Widget):
         return mark_safe(u'\n'.join(output))
     
     class Media:
-        js = ( 'municipios/js/municipio.js',)
+        if HAS_REVERSE_LAZY:
+            base_url_js = reverse_lazy('municipios-base-url-js')
+        else:
+            base_url_js = '/municipios_app/base_url.js'
+        js = (base_url_js, 'municipios/js/municipio.js',)
 

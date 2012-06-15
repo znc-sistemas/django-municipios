@@ -1,10 +1,13 @@
 <html>
-   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.5.2.min.js"></script>
-    <script>
-        
-    </script>
+    <head>
+        <title>Teste</title>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        {{ form.media }}
+    </head>
     <body>
-    {{form.media}}
-    {{form.as_p}}
+        <form>
+            {{ form.as_p }}
+            <input type="submit" />
+        </form>
     </body>
 </html>
