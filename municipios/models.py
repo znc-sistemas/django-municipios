@@ -35,14 +35,21 @@ class Municipio(models.Model):
     Municípios do Brasil
     """
     id_ibge = models.IntegerField(primary_key=True)
+    
     nome = models.CharField(max_length=150)
+    
     nome_abreviado = models.CharField(max_length=150, blank=True, null=True)    
+    
     uf = models.ForeignKey(UF)
-    uf_sigla = models.CharField(max_length=2)
+    
     if MUNICIPIOS_GEO: 
         sede = models.PointField(srid=SRID, null=True, blank=True)
         geom = models.MultiPolygonField(srid=SRID, null=True, blank=True)
         objects = models.GeoManager()
+            
+    @property
+    def uf_sigla(self):
+        return self.uf.uf
             
     def __unicode__(self):
         return u'%s - %s' % (self.nome, self.uf_sigla)
