@@ -58,9 +58,9 @@ def convert_shapefile(shapefilename, srid=4674):
     """
     # /home/nando/Desktop/IBGE/2010/55MU2500GC_SIR.shp
     ds = DataSource(shapefilename)
-    
+
     is_uf = shapefilename.upper().find('UF') != -1
-    
+
     transform_coord = None
     if srid != SRID:
         transform_coord = CoordTransform(SpatialReference(srid), SpatialReference(SRID))
@@ -69,52 +69,52 @@ def convert_shapefile(shapefilename, srid=4674):
         model = UF
     else:
         model = Municipio
-    
+
     ct = 0
     for f in ds[0]:
 
         # 3D para 2D se necessário
         if f.geom.coord_dim != 2:
             f.geom.coord_dim = 2
-        
+
         # converte para MultiPolygon se necessário
         if isinstance(f.geom, Polygon):
             g = OGRGeometry(OGRGeomType('MultiPolygon'))
             g.add(f.geom)
         else:
             g = f.geom
-        
+
         # transforma coordenadas se necessário
         if transform_coord:
             g.transform(transform_coord)
 
         # força 2D
-        g.coord_dim = 2        
-        
-        kwargs = {
-            'nome': capitalize_name(unicode(f.get('NOME'), 'latin1')), 
-            'geom': g.ewkt
-        }
-        
+        g.coord_dim = 2
+        kwargs = {}
+
         if is_uf:
-            kwargs['id_ibge'] = f.get('GEOCODUF')
-            kwargs['regiao'] = capitalize_name(unicode(f.get('REGIAO'), 'latin1'))
+            kwargs['nome'] = capitalize_name(unicode(f.get(CAMPO_NOME_UF),'latin1'))
+            kwargs['geom'] = g.ewkt
+            kwargs['id_ibge'] = f.get(CAMPO_GEOCODIGO_UF)
+            kwargs['regiao'] = capitalize_name(unicode(f.get(CAMPO_REGIAO_UF), 'latin1'))
             kwargs['uf'] = UF_SIGLAS_DICT.get(kwargs['id_ibge'])
         else:
-            kwargs['id_ibge'] = f.get('GEOCODMU')                
-            kwargs['uf'] = UF.objects.get(pk=f.get('GEOCODMU')[:2])
-            kwargs['uf_sigla'] = kwargs['uf'].uf 
+            kwargs['nome'] = capitalize_name(unicode(f.get(CAMPO_NOME_MU),'latin1'))
+            kwargs['geom'] = g.ewkt
+            kwargs['id_ibge'] = f.get(CAMPO_GEOCODIGO_MU)
+            kwargs['uf'] = UF.objects.get(pk=f.get(CAMPO_GEOCODIGO_MU)[:2])
+            kwargs['uf_sigla'] = kwargs['uf'].uf
             kwargs['nome_abreviado'] = slugify(kwargs['nome'])
             # tenta corrigir nomes duplicados, são em torno de 242 nomes repetidos
             # adicionando a sigla do estado no final
             if Municipio.objects.filter(nome_abreviado=kwargs['nome_abreviado']).count() > 0:
                 kwargs['nome_abreviado'] = u'%s-%s' % (kwargs['nome_abreviado'], kwargs['uf_sigla'].lower())
-            
+
         instance = model(**kwargs)
         instance.save()
-        
+
         ct += 1
-    
+
     print ct, (is_uf and "Unidades Federativas criadas" or "Municipios criados")
     
     
