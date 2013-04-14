@@ -2,6 +2,9 @@
 from django.forms.widgets import Widget, Select
 from django.utils.safestring import mark_safe
 
+from django.template import Context, Template
+from django.template.loader import get_template
+
 try:
     from django.core.urlresolvers import reverse_lazy
     HAS_REVERSE_LAZY = True
@@ -43,13 +46,20 @@ class SelectMunicipioWidget(Widget):
         select_html = uf_select.render('%s_uf' % name, uf_val, attrs=uf_attrs)
         required = False
         if 'class' in self.attrs:
-            required = self.attrs['class'] == 'required'
-        output.append(u'<div class="field"><label%s>UF</label><br />%s</div>' % (required and ' class="required"' or '', select_html))
+            required = self.attrs['class']
+        #output.append(u'<div class="field"><label%s>UF</label><br />%s</div>' % (required and ' class="required"' or '', select_html))
+        template_uf = get_template('municipios/uf_field.html')
+        context_uf = Context({'label_class': required, 'wselect': select_html})
+        output.append(template_uf.render(context_uf))
 
         munic_attrs = self.attrs.copy()
         munic_attrs['style'] = "width:250px;"
         select_html = municipio_select.render(name, value, munic_attrs)
-        output.append(u'<div class="field"><label%s>Município</label><br />%s</div>' % (required and ' class="required"' or '', select_html))
+        #output.append(u'<div class="field"><label%s>Município</label><br />%s</div>' % (required and ' class="required"' or '', select_html))
+        template_mun = get_template('municipios/municipio_field.html')
+        context_mun = Context({'label_class': required, 'wselect': select_html})
+        output.append(template_mun.render(context_mun))
+
         return mark_safe(u'\n'.join(output))
 
     class Media:
