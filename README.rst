@@ -108,6 +108,27 @@ Template
     {{ form }}
 
 
+Template para o widget
+~~~~~~~~~~~~~~~~~~~~~~  
+A partir da versão 0.8.0 é possível customizar o template utilizado para apresentar o widget.
+Os templates identificados pela aplicação são :
+
+1. municipio_field.html
+2. uf_field.html
+
+e o nome da variável a ser substituída é ``{{wselect}}``
+
+    ex.: de template para BootStrapTwitter
+
+::
+
+    <div class="control-group">
+        <div class="controls"><label>Município</label> {{wselect}}  </div>
+    </div>
+
+adicione o HTML acima em um template dentro de por exemplo <app>/municipios/templates/municipios/municipio_field.html
+
+
 URLs
 ~~~~
 Adicionar as urls da aplicação no arquivo definido pelo ``ROOT_URLCONF`` do setings.py.
