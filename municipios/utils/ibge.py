@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 from django.contrib.gis.gdal import DataSource, SpatialReference, CoordTransform, OGRGeometry, OGRGeomType
 from django.contrib.gis.gdal.geometries import Polygon
 from django.template.defaultfilters import slugify
