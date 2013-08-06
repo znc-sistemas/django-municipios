@@ -10,5 +10,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if not args:
             raise CommandError('Arquivo Shapefile do IBGE não especificado!')
-        print "Convertendo '%s':" % args[0]
+        print("Convertendo '%s':" % args[0])
         convert_shapefile(args[0])
