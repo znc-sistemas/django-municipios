@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.conf import settings
+from django.utils.encoding import python_2_unicode_compatible
 
 MUNICIPIOS_GEO = getattr(settings,'MUNICIPIOS_GEO', False)
 
@@ -11,9 +13,9 @@ else:
 SRID = None
 if MUNICIPIOS_GEO:
     SRID = getattr(settings,'MUNICIPIOS_SRID', 900913)
-    
-    
-    
+
+
+@python_2_unicode_compatible
 class UF(models.Model):
     """
     Unidades Federativas (Estados) do Brasil
@@ -26,10 +28,11 @@ class UF(models.Model):
         geom = models.MultiPolygonField(srid=SRID, null=True, blank=True)
         objects = models.GeoManager()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nome
-    
-         
+
+
+@python_2_unicode_compatible
 class Municipio(models.Model):
     """
     Municípios do Brasil
@@ -44,6 +47,6 @@ class Municipio(models.Model):
         geom = models.MultiPolygonField(srid=SRID, null=True, blank=True)
         objects = models.GeoManager()
             
-    def __unicode__(self):
-        return u'%s - %s' % (self.nome, self.uf_sigla)
+    def __str__(self):
+        return '%s - %s' % (self.nome, self.uf_sigla)
     
