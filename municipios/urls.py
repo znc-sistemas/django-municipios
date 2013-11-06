@@ -1,4 +1,7 @@
-from django.conf.urls.defaults import patterns, include, url
+try:
+    from django.conf.urls.defaults import patterns, include, url
+except:    
+    from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('municipios.views',
 	url(r'^$', 'base_url_js', name='municipios-base-url'),
