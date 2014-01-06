@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 from django.contrib.gis.gdal import DataSource, SpatialReference, CoordTransform, OGRGeometry, OGRGeomType
 from django.contrib.gis.gdal.geometries import Polygon
 from django.template.defaultfilters import slugify
@@ -115,7 +116,7 @@ def convert_shapefile(shapefilename, srid=4674):
 
         ct += 1
 
-    print ct, (is_uf and "Unidades Federativas criadas" or "Municipios criados")
+    print(ct, (is_uf and "Unidades Federativas criadas" or "Municipios criados"))
     
     
 def update_sedes_municipais(shapefilename, srid=4618):
@@ -134,34 +135,27 @@ def update_sedes_municipais(shapefilename, srid=4618):
         muns = Municipio.objects.extra(where=['CAST(id_ibge AS VARCHAR) ILIKE %s'], params=['%s%%' % cod])
         if muns:
             if len(muns) > 1:
-                print "Mais de 1 municipio para", cod
+                print("Mais de 1 municipio para", cod)
                 for m in muns:
-                    print m.id_ibge, m
+                    print(m.id_ibge, m)
             else:
                 g = f.geom
                 g.srs = SpatialReference(srid)
                 g.srid = srid
                 if transform_coord:
                     g.transform(transform_coord)
-                print g.ewkt
+                print(g.ewkt)
                 muns[0].sede = g.ewkt
                 muns[0].save()
                 cta += 1
         else:
-            print cod, "nao econtrado!"
+            print(cod, "nao econtrado!")
     
-    print "Atualizados", cta, "sedes"
-    print "Total de", ct, "registros no shapefile"
+    print("Atualizados", cta, "sedes")
+    print("Total de", ct, "registros no shapefile")
         
 if __name__ == "__main__":
     if len(sys.argv) == 1:
-        print "Informe o arquivo shapefile!"
+        print("Informe o arquivo shapefile!")
     else:
         convert_shapefile(sys.argv[1])
-        
-
-
-
-
-
-
