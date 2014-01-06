@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.forms.widgets import Widget, Select
-from django.utils.safestring import mark_safe
+from django.forms.widgets import Select, Widget
 
 from django.template import Context
 from django.template.loader import get_template
+
+from django.utils.safestring import mark_safe
 
 try:
     from django.core.urlresolvers import reverse_lazy
