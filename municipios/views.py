@@ -7,8 +7,9 @@ from django.template import RequestContext
 from models import Municipio
 from forms import FormMunicipio
 
+
 def base_url_js(request):
-	return HttpResponse(u"var __municipios_base_url__ = '%s';" % reverse('municipios-base-url'))
+    return HttpResponse(u"var __municipios_base_url__ = '%s';" % reverse('municipios-base-url'))
 
 
 def municipios_ajax(request, uf):
@@ -18,8 +19,9 @@ def municipios_ajax(request, uf):
                               {"municipio_list": municipio_list},
                               context_instance=RequestContext(request))
 
+
 def teste(request):
     form = FormMunicipio(request.GET or None)
     return render_to_response('municipios/teste.html',
-                              {'form':form,},
-                               context_instance=RequestContext(request),)
+                              {'form': form},
+                              context_instance=RequestContext(request),)
