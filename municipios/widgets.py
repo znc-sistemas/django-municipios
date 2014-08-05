@@ -2,7 +2,7 @@
 from django.forms.widgets import Widget, Select
 from django.utils.safestring import mark_safe
 
-from django.template import Context, Template
+from django.template import Context
 from django.template.loader import get_template
 
 try:
@@ -68,4 +68,3 @@ class SelectMunicipioWidget(Widget):
         else:
             base_url_js = '/municipios_app/base_url.js'
         js = (base_url_js, 'municipios/js/municipio.js',)
-
