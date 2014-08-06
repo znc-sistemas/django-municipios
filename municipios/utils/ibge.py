@@ -2,7 +2,14 @@
 from django.contrib.gis.gdal import DataSource, SpatialReference, CoordTransform, OGRGeometry, OGRGeomType
 from django.contrib.gis.gdal.geometries import Polygon
 from django.template.defaultfilters import slugify
+
 from municipios.models import UF, Municipio, SRID
+
+from municipios.utils.settings import (
+    CAMPO_GEOCODIGO_MU, CAMPO_GEOCODIGO_UF, CAMPO_NOME_MU,
+    CAMPO_NOME_UF, CAMPO_REGIAO_UF
+)
+
 import sys
 
 KEEP_LOWCASE = ('de', 'da', 'das', 'do', 'dos',)
@@ -50,7 +57,7 @@ def capitalize_name(s):
     return u" ".join(res)
 
 
-def convert_shapefile(shapefilename, srid=4674):
+def convert_shapefile(shapefilename, srid=4674, update=False):
     """
     shapefilename: considera nomenclatura de shapefile do IBGE para determinar se é UF
                    ou Municípios.
@@ -58,7 +65,8 @@ def convert_shapefile(shapefilename, srid=4674):
     srid: 4674 (Projeção SIRGAS 2000)
     """
     # /home/nando/Desktop/IBGE/2010/55MU2500GC_SIR.shp
-    ds = DataSource(shapefilename)
+    # from municipios.utils.ibge import convert_shapefile; convert_shapefile('/home/znc/Downloads/mun_2013/50MUE250GC_SIR.shp', update=True)
+    ds = DataSource(shapefilename, encoding='latin1')
 
     is_uf = shapefilename.upper().find('UF') != -1
 
@@ -72,6 +80,8 @@ def convert_shapefile(shapefilename, srid=4674):
         model = Municipio
 
     ct = 0
+    atualizadas = {'uf': [], 'mun': []}
+    criadas = {'uf': [], 'mun': []}
     for f in ds[0]:
 
         # 3D para 2D se necessário
@@ -92,15 +102,15 @@ def convert_shapefile(shapefilename, srid=4674):
         # força 2D
         g.coord_dim = 2
         kwargs = {}
-
-        if is_uf:
-            kwargs['nome'] = capitalize_name(unicode(f.get(CAMPO_NOME_UF),'latin1'))
+        key = 'uf' if is_uf else 'mun'
+        if key == 'uf':
+            kwargs['nome'] = capitalize_name(f.get(CAMPO_NOME_UF))
             kwargs['geom'] = g.ewkt
             kwargs['id_ibge'] = f.get(CAMPO_GEOCODIGO_UF)
-            kwargs['regiao'] = capitalize_name(unicode(f.get(CAMPO_REGIAO_UF), 'latin1'))
+            kwargs['regiao'] = capitalize_name(f.get(CAMPO_REGIAO_UF))
             kwargs['uf'] = UF_SIGLAS_DICT.get(kwargs['id_ibge'])
         else:
-            kwargs['nome'] = capitalize_name(unicode(f.get(CAMPO_NOME_MU),'latin1'))
+            kwargs['nome'] = capitalize_name(f.get(CAMPO_NOME_MU))
             kwargs['geom'] = g.ewkt
             kwargs['id_ibge'] = f.get(CAMPO_GEOCODIGO_MU)
             kwargs['uf'] = UF.objects.get(pk=f.get(CAMPO_GEOCODIGO_MU)[:2])
@@ -111,12 +121,33 @@ def convert_shapefile(shapefilename, srid=4674):
             if Municipio.objects.filter(nome_abreviado=kwargs['nome_abreviado']).count() > 0:
                 kwargs['nome_abreviado'] = u'%s-%s' % (kwargs['nome_abreviado'], kwargs['uf_sigla'].lower())
 
-        instance = model(**kwargs)
-        instance.save()
+        if not update:
+            instance = model(**kwargs)
+            instance.save()
+        else:
+            try:
+                instance = model.objects.get(nome=kwargs['nome'], id_ibge=kwargs['id_ibge'], uf=kwargs['uf'])
+                instance_filter = model.objects.filter(pk=instance.pk)
+                # if not instance_filter.filter(geom__equals=g.geos).count() >= 1:
+                # if instance.geom.wkt != g.geos.wkt:
+                if instance.geom.area != g.geos.area:
+                    atualizadas[key].append(kwargs['id_ibge'])
 
+                instance_filter.update(**kwargs)
+            except model.DoesNotExist:
+                criadas[key].append(kwargs['id_ibge'])
+                instance = model(**kwargs)
+                instance.save()
         ct += 1
 
-    print ct, (is_uf and "Unidades Federativas criadas" or "Municipios criados")
+    print ct, (is_uf and "Unidades Federativas carregadas" or "Municipios carregados")
+    if update:
+        atualizadas_list = atualizadas[key]
+        criadas_list = criadas[key]
+        print ''
+        print 'Geometrias Criadas (%d):\n' % len(criadas_list), '\n'.join(criadas_list)
+        print ''
+        print 'Geometrias Atualizadas (%d):\n' % len(atualizadas_list), '\n'.join(atualizadas_list)
 
 
 def update_sedes_municipais(shapefilename, srid=4618):
