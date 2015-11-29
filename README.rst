@@ -4,6 +4,9 @@ Municípios Brasileiros para Django
 
 Aplicação plugável Django com modelos e widgets para os Municípios Brasileiros
 
+- Form com selector Ajax
+- widget reutiliz[avel com Field specificop para modelos com campo municipio.
+
 
 Instalando o django-municipios
 ==============================
