@@ -8,6 +8,6 @@ urlpatterns = patterns(
     'municipios.views',
     url(r'^$', 'base_url_js', name='municipios-base-url'),
     url(r'^base_url.js$', 'base_url_js', name='municipios-base-url-js'),
-    url(r'^ajax/municipios/(?P<uf>\w\w)/$', 'municipios_ajax', name='municipios-ajax'),
+    url(r'^ajax/municipios/(?P<uf>\w\w)/(?P<app_label>\w+)/(?P<object_name>\w+)/$', 'municipios_ajax', name='municipios-ajax'),
     url(r'^teste/', 'teste', name='municipios-teste'),
 )
