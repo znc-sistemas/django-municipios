@@ -40,6 +40,7 @@ UF_SIGLAS = (
 
 UF_SIGLAS_DICT = dict([(str(c), u) for c, u in UF_SIGLAS])
 
+
 def capitalize_name(s):
     res = []
     for w in s.lower().split(' '):
@@ -52,7 +53,7 @@ def capitalize_name(s):
 
 def convert_shapefile(shapefilename, srid=4674):
     """
-    shapefilename: considera nomenclatura de shapefile do IBGE para determinar se é UF 
+    shapefilename: considera nomenclatura de shapefile do IBGE para determinar se é UF
                    ou Municípios.
                    ex. 55UF2500GC_SIR.shp para UF e 55MU2500GC_SIR.shp para Municípios
     srid: 4674 (Projeção SIRGAS 2000)
@@ -94,13 +95,13 @@ def convert_shapefile(shapefilename, srid=4674):
         kwargs = {}
 
         if is_uf:
-            kwargs['nome'] = capitalize_name(unicode(f.get(CAMPO_NOME_UF),'latin1'))
+            kwargs['nome'] = capitalize_name(unicode(f.get(CAMPO_NOME_UF), 'latin1'))
             kwargs['geom'] = g.ewkt
             kwargs['id_ibge'] = f.get(CAMPO_GEOCODIGO_UF)
             kwargs['regiao'] = capitalize_name(unicode(f.get(CAMPO_REGIAO_UF), 'latin1'))
             kwargs['uf'] = UF_SIGLAS_DICT.get(kwargs['id_ibge'])
         else:
-            kwargs['nome'] = capitalize_name(unicode(f.get(CAMPO_NOME_MU),'latin1'))
+            kwargs['nome'] = capitalize_name(unicode(f.get(CAMPO_NOME_MU), 'latin1'))
             kwargs['geom'] = g.ewkt
             kwargs['id_ibge'] = f.get(CAMPO_GEOCODIGO_MU)
             kwargs['uf'] = UF.objects.get(pk=f.get(CAMPO_GEOCODIGO_MU)[:2])
@@ -117,12 +118,12 @@ def convert_shapefile(shapefilename, srid=4674):
         ct += 1
 
     print(ct, (is_uf and "Unidades Federativas criadas" or "Municipios criados"))
-    
-    
+
+
 def update_sedes_municipais(shapefilename, srid=4618):
     # dados de um shapefile de 2001
     ds = DataSource(shapefilename)
-    
+
     transform_coord = None
     if srid != SRID:
         transform_coord = CoordTransform(SpatialReference(srid), SpatialReference(SRID))
@@ -130,7 +131,7 @@ def update_sedes_municipais(shapefilename, srid=4618):
     ct = 0
     cta = 0
     for f in ds[0]:
-        ct +=1
+        ct += 1
         cod = f.get('CODIGO')
         muns = Municipio.objects.extra(where=['CAST(id_ibge AS VARCHAR) ILIKE %s'], params=['%s%%' % cod])
         if muns:
@@ -150,10 +151,10 @@ def update_sedes_municipais(shapefilename, srid=4618):
                 cta += 1
         else:
             print(cod, "nao econtrado!")
-    
+
     print("Atualizados", cta, "sedes")
     print("Total de", ct, "registros no shapefile")
-        
+
 if __name__ == "__main__":
     if len(sys.argv) == 1:
         print("Informe o arquivo shapefile!")
