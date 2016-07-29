@@ -12,9 +12,10 @@ function changeUF(the_select){
         mun_sel.attr('disabled', true).html('<option value="">Aguarde...</option>');
         mun_sel.load(
             __municipios_base_url__+'ajax/municipios/'+uf+'/'+app_label+'/'+object_name+'/',
-            null, 
+            null,
             function(){
                 mun_sel[0].disabled=false;
+                mun_sel.trigger( "endLoad" );
             }
         );
     } else {
