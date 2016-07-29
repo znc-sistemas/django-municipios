@@ -15,7 +15,7 @@ function changeUF(the_select){
             null,
             function(){
                 mun_sel[0].disabled=false;
-                mun_sel.trigger( "endLoad" );
+                mun_sel.trigger( "endLoadMunicipios" );
             }
         );
     } else {
