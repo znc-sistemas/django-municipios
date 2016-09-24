@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.apps import apps
 
-from forms import FormMunicipio
+from municipios.forms import FormMunicipio
 
 
 def base_url_js(request):

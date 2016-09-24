@@ -1,13 +1,13 @@
 try:
-    from django.conf.urls import patterns, url
+    from django.conf.urls import url
 except:
-    from django.conf.urls.defaults import patterns, url
+    from django.conf.urls.defaults import url
 
+import municipios.views as mviews
 
-urlpatterns = patterns(
-    'municipios.views',
-    url(r'^$', 'base_url_js', name='municipios-base-url'),
-    url(r'^base_url.js$', 'base_url_js', name='municipios-base-url-js'),
-    url(r'^ajax/municipios/(?P<uf>\w\w)/(?P<app_label>\w+)/(?P<object_name>\w+)/$', 'municipios_ajax', name='municipios-ajax'),
-    url(r'^teste/', 'teste', name='municipios-teste'),
+urlpatterns = (
+    url(r'^$', mviews.base_url_js, name='municipios-base-url'),
+    url(r'^base_url.js$', mviews.base_url_js, name='municipios-base-url-js'),
+    url(r'^ajax/municipios/(?P<uf>\w\w)/(?P<app_label>\w+)/(?P<object_name>\w+)/$', mviews.municipios_ajax, name='municipios-ajax'),
+    url(r'^teste/', mviews.teste, name='municipios-teste'),
 )
