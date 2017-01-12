@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
         ),
     ]
 
-    if settings.MUNICIPIOS_GEO:
+    if getattr(settings, 'MUNICIPIOS_GEO', False):
         SRID = getattr(settings, 'MUNICIPIOS_SRID', 900913)
         import django.contrib.gis.db.models.fields
         operations.extend([
