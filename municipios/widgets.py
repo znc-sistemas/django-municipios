@@ -36,7 +36,7 @@ class SelectMunicipioWidget(Widget):
 
         output = []
         uf_val = ''
-        uf_choices = [('', '--')]+list(self.mun_cls.objects.values_list('uf__id_ibge', 'uf_sigla').distinct().order_by('uf'))
+        uf_choices = [('', '--')] + list(self.mun_cls.objects.values_list('uf__id_ibge', 'uf_sigla').distinct().order_by('uf_sigla'))
         uf_select = Select(choices=uf_choices)
         municipio_select = Select(choices=(('', '--'),))
 
@@ -45,7 +45,7 @@ class SelectMunicipioWidget(Widget):
                 municipio = self.mun_cls.objects.get(pk=value)
                 uf_val = municipio.uf.pk
                 mun_choices = [(m.pk, m.nome) for m in self.mun_cls.objects.filter(uf=uf_val).order_by('nome')]
-                municipio_select = Select(choices=[('', '- Selecione -')]+mun_choices)
+                municipio_select = Select(choices=[('', '- Selecione -')] + mun_choices)
             except self.mun_cls.DoesNotExist:
                 pass
         uf_attrs = self.attrs.copy()
