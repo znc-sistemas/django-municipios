@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from widgets import SelectMunicipioWidget
+from municipios.widgets import SelectMunicipioWidget
 
 
 class FormMunicipio(forms.Form):
