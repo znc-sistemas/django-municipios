@@ -65,13 +65,13 @@ No settings.py, antes de rodar o `syncdb`.
 Este parâmetro habilita os campos que armazenam dados Geográficos (GeoDjango).
 
 Para carregar dados geográficos de todos os Municípios e UFs baixe o arquivo de fixture 
-municipios_geo_900913.json.bz2_ (27.5 MB), e carregue a fixture com 
+municipios_geo_2013_4674.json.zip_ (110 MB), e carregue a fixture com 
 
 ::
     
     python manage.py loaddata municipios_geo_900913.json.bz2
 
-.. _municipios_geo_900913.json.bz2: https://github.com/downloads/znc-sistemas/django-municipios/municipios_geo_900913.json.bz2
+.. _municipios_geo_2013_4674.json.zip: https://github.com/znc-sistemas/django-municipios/releases/download/0.8.1/municipios_geo_2013_4674.json.zip
     
     
 Utilizando o widget de Seleção de Municípios
