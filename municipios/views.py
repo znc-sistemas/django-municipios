@@ -2,8 +2,7 @@
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.apps import apps
 
 from municipios.forms import FormMunicipio
@@ -17,13 +16,17 @@ def municipios_ajax(request, uf, app_label, object_name):
     model_cls = apps.get_model(app_label, object_name)
 
     municipio_list = model_cls.objects.filter(Q(uf=uf)).order_by('nome')
-    return render_to_response("municipios/municipios_options.html",
-                              {"municipio_list": municipio_list},
-                              context_instance=RequestContext(request))
+    return render(
+        render,
+        "municipios/municipios_options.html",
+        {"municipio_list": municipio_list},
+    )
 
 
 def teste(request):
     form = FormMunicipio(request.GET or None)
-    return render_to_response('municipios/teste.html',
-                              {'form': form},
-                              context_instance=RequestContext(request),)
+    return render(
+        render,
+        'municipios/teste.html',
+        {'form': form},
+    )

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.forms.widgets import Select, Widget
 
-from django.template import Context
 from django.template.loader import get_template
 
 from django.utils.safestring import mark_safe
@@ -63,7 +62,7 @@ class SelectMunicipioWidget(Widget):
             required = self.attrs['class']
         # output.append(u'<div class="field"><label%s>UF</label><br />%s</div>' % (required and ' class="required"' or '', select_html))
         template_uf = get_template('municipios/uf_field.html')
-        context_uf = Context({'label_class': required, 'wselect': select_html})
+        context_uf = {'label_class': required, 'wselect': select_html}
         output.append(template_uf.render(context_uf))
 
         munic_attrs = self.attrs.copy()
@@ -71,7 +70,7 @@ class SelectMunicipioWidget(Widget):
         select_html = municipio_select.render(name, value, munic_attrs)
         # output.append(u'<div class="field"><label%s>Município</label><br />%s</div>' % (required and ' class="required"' or '', select_html))
         template_mun = get_template('municipios/municipio_field.html')
-        context_mun = Context({'label_class': required, 'wselect': select_html})
+        context_mun = {'label_class': required, 'wselect': select_html}
         output.append(template_mun.render(context_mun))
 
         return mark_safe(u'\n'.join(output))
