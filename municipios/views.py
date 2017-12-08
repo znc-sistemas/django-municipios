@@ -17,7 +17,7 @@ def municipios_ajax(request, uf, app_label, object_name):
 
     municipio_list = model_cls.objects.filter(Q(uf=uf)).order_by('nome')
     return render(
-        render,
+        request,
         "municipios/municipios_options.html",
         {"municipio_list": municipio_list},
     )
@@ -26,7 +26,7 @@ def municipios_ajax(request, uf, app_label, object_name):
 def teste(request):
     form = FormMunicipio(request.GET or None)
     return render(
-        render,
+        request,
         'municipios/teste.html',
         {'form': form},
     )
