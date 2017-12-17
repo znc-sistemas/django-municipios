@@ -6,8 +6,11 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.apps import apps
 
-from forms import FormMunicipio
-
+try:
+    from forms import FormMunicipio
+except:
+    # python 3.5.2 django1.9
+    from municipios.forms import FormMunicipio
 
 def base_url_js(request):
     return HttpResponse(u"var __municipios_base_url__ = '%s';" % reverse('municipios-base-url'))
