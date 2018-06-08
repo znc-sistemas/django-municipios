@@ -2,6 +2,9 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.contrib.gis.db import models as models_geo
+
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
@@ -34,3 +37,27 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(to='municipios.UF'),
         ),
     ]
+
+    MUNICIPIOS_GEO = getattr(settings, 'MUNICIPIOS_GEO', False)
+
+    if MUNICIPIOS_GEO:
+        SIRGAS_2000 = 4674
+        MUNICIPIOS_SRID = getattr(settings, 'MUNICIPIOS_SRID', SIRGAS_2000)
+
+        operations += [
+            migrations.AddField(
+                model_name='municipio',
+                name='geom',
+                field=models_geo.fields.MultiPolygonField(blank=True, null=True, srid=MUNICIPIOS_SRID),
+            ),
+            migrations.AddField(
+                model_name='municipio',
+                name='sede',
+                field=models_geo.fields.PointField(blank=True, null=True, srid=MUNICIPIOS_SRID),
+            ),
+            migrations.AddField(
+                model_name='uf',
+                name='geom',
+                field=models_geo.fields.MultiPolygonField(blank=True, null=True, srid=MUNICIPIOS_SRID),
+            ),
+        ]
