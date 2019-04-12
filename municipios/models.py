@@ -27,7 +27,6 @@ class UF(models.Model):
     regiao = models.CharField(max_length=20)
     if MUNICIPIOS_GEO:
         geom = models.MultiPolygonField(srid=SRID, null=True, blank=True)
-        objects = models.GeoManager()
 
     def __str__(self):
         return self.nome
@@ -41,12 +40,11 @@ class Municipio(models.Model):
     id_ibge = models.IntegerField(primary_key=True)
     nome = models.CharField(max_length=150)
     nome_abreviado = models.CharField(max_length=150, blank=True, null=True)
-    uf = models.ForeignKey(UF)
+    uf = models.ForeignKey(UF, models.PROTECT)
     uf_sigla = models.CharField(max_length=2)
     if MUNICIPIOS_GEO:
         sede = models.PointField(srid=SRID, null=True, blank=True)
         geom = models.MultiPolygonField(srid=SRID, null=True, blank=True)
-        objects = models.GeoManager()
 
     def __str__(self):
         return '%s - %s' % (self.nome, self.uf_sigla)
