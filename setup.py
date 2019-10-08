@@ -30,8 +30,22 @@ setup(
     author='ZNC Sistemas',
     author_email='contato@znc.com.br',
     url='https://github.com/znc-sistemas/django-municipios',
-    packages=[
-        'municipios',
+    packages=['municipios'],
+    data_files=[
+        ('migrations', [
+            'municipios/migrations/__init__.py',
+            'municipios/migrations/0001_initial.py',
+        ]),
+        ('templates', [
+            'municipios/templates/municipios/municipio_field.html',
+            'municipios/templates/municipios/municipios_options.html',
+            'municipios/templates/municipios/uf_field.html',
+        ]),
+        ('utils', [
+            'municipios/utils/__init__.py',
+            'municipios/utils/ibge.py',
+            'municipios/utils/settings.py',
+        ]),
     ],
     include_package_data=True,
     install_requires=[],
