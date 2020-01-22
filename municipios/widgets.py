@@ -26,7 +26,7 @@ class SelectMunicipioWidget(Widget):
         self.mun_cls = apps.get_model(self.app_label, self.object_name)
         super(SelectMunicipioWidget, self).__init__(*args, **kwargs)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if value is None:
             value = ''
         attrs = attrs or {}
