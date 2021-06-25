@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.utils.six import python_2_unicode_compatible
+from six import python_2_unicode_compatible
 
 MUNICIPIOS_GEO = getattr(settings, 'MUNICIPIOS_GEO', False)
 
