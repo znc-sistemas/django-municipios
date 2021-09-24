@@ -2,10 +2,10 @@
 Municípios Brasileiros para Django
 ==================================
 
-Aplicação plugável Django com modelos e widgets para os Municípios Brasileiros
+Aplicação plugável Django com modelos e widgets para os municípios brasileiros
 
 - Form com selector Ajax
-- widget reutiliz[avel com Field specificop para modelos com campo municipio.
+- widget reutilizável com Field specifico para modelos com campo municipio.
 
 
 Instalando o django-municipios
@@ -36,6 +36,7 @@ Usando o django-municipios
 
 SETTINGS
 ~~~~~~~~
+
 adicione a aplicação no INSTALLED_APP no seu settings.py
 
 ::
@@ -98,7 +99,8 @@ View
 
 
 Template
-~~~~~~~~  
+~~~~~~~~
+
 1. Inclua o jquery no seu template, ou adicione ao media do seu Form.
 2. form.media - o widget depende de codigo js para funcionar o ajax
 
@@ -112,7 +114,8 @@ Template
 
 
 Template para o widget
-~~~~~~~~~~~~~~~~~~~~~~  
+~~~~~~~~~~~~~~~~~~~~~~
+
 A partir da versão 0.8.0 é possível customizar o template utilizado para apresentar o widget.
 Os templates identificados pela aplicação são :
 
@@ -134,6 +137,7 @@ adicione o HTML acima em um template dentro de por exemplo <app>/municipios/temp
 
 URLs
 ~~~~
+
 Adicionar as urls da aplicação no arquivo definido pelo ``ROOT_URLCONF`` do setings.py.
 
 .. admonition:: Nota
