@@ -1,13 +1,10 @@
-try:
-    from django.conf.urls import url
-except:
-    from django.conf.urls.defaults import url
+from django.urls import path, re_path
 
 import municipios.views as mviews
 
 urlpatterns = (
-    url(r'^$', mviews.base_url_js, name='municipios-base-url'),
-    url(r'^base_url.js$', mviews.base_url_js, name='municipios-base-url-js'),
-    url(r'^ajax/municipios/(?P<uf>\w\w)/(?P<app_label>\w+)/(?P<object_name>\w+)/$', mviews.municipios_ajax, name='municipios-ajax'),
-    url(r'^teste/', mviews.teste, name='municipios-teste'),
+    path('', mviews.base_url_js, name='municipios-base-url'),
+    path('base_url.js', mviews.base_url_js, name='municipios-base-url-js'),
+    re_path('^ajax/municipios/(?P<uf>\w\w)/(?P<app_label>\w+)/(?P<object_name>\w+)/$', mviews.municipios_ajax, name='municipios-ajax'),
+    path('teste/', mviews.teste, name='municipios-teste'),
 )
