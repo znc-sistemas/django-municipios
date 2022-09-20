@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.utils.encoding import python_2_unicode_compatible
+from six import python_2_unicode_compatible
 
 MUNICIPIOS_GEO = getattr(settings, 'MUNICIPIOS_GEO', False)
 
@@ -13,7 +13,7 @@ else:
 
 SRID = None
 if MUNICIPIOS_GEO:
-    SRID = getattr(settings, 'MUNICIPIOS_SRID', 900913)
+    SRID = getattr(settings, 'MUNICIPIOS_SRID', 4674)
 
 
 @python_2_unicode_compatible

@@ -22,6 +22,11 @@ if sys.argv[-1] == 'publish':
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
+
+def get_requirements():
+    return open('requirements.txt').read().splitlines()
+
+
 setup(
     name='django-municipios',
     version=version,
@@ -48,7 +53,6 @@ setup(
         ]),
     ],
     include_package_data=True,
-    install_requires=[],
     license="MIT",
     zip_safe=False,
     keywords='django-municipios',
@@ -66,4 +70,5 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
     ],
+    install_requires=get_requirements(),
 )
